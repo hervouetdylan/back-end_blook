@@ -1,0 +1,29 @@
+services:
+  app :
+    build : .
+    ports:
+      - "3003:3000"
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: blook
+      MYSQL_DB: blook_db
+      MYSQL_PASSWORD: hello
+    volumes:
+      - ./src/:/usr/src/app/src/
+    depends_on:
+      - mysql
+    links:
+      - mysql
+  
+  mysql : 
+    image : mariadb:11
+    volumes : 
+      - blook_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD : root
+      MYSQL_DATABASE : blook_db
+      MYSQL_USER : blook
+      MYSQL_PASSWORD : hello
+
+volumes :
+  blook_data:
